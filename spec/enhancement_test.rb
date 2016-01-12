@@ -65,6 +65,7 @@ end
 describe SiegeEngine do
   before do
     @siege_engine = SiegeEngine.new
+    @enemy_siege_engine = SiegeEngine.new
   end
 
   context 'when created' do
@@ -75,6 +76,61 @@ describe SiegeEngine do
     it 'should have 400 HP' do
       expect(@siege_engine.health_points).to eq(400)
     end
+  end
+
+  context 'when HP equals 0' do
+    it 'should be dead' do
+      @siege_engine.damage(@siege_engine.health_points)
+      expect(@siege_engine.dead?).to be_truthy
+    end
+
+    it 'cannot attack' do
+      expect(@siege_engine).to receive(:dead?).and_return(true)
+      @siege_engine.attack!(@enemy_siege_engine)
+      expect(@enemy_siege_engine.health_points).to eq(400)
+    end
+
+    it 'cannot be attacked' do
+      expect(@siege_engine).to receive(:dead?).and_return(true)
+      expect(@siege_engine.attack!(@siege_engine)).to be_nil
+    end
+  end
+
+  context 'when HP does not equal 0' do
+    it 'should be not dead' do
+      @siege_engine.damage(@siege_engine.health_points - 1)
+      expect(@siege_engine.dead?).to be_falsy
+    end
+
+    it 'can attack siege engines' do
+      @siege_engine.attack!(@enemy_siege_engine)
+      expect(@enemy_siege_engine.health_points).to eq(350)
+    end
+
+    it 'can be attacked by siege engines' do
+      expect(@siege_engine).to receive(:dead?).and_return(false)
+      @enemy_siege_engine.attack!(@siege_engine)
+      expect(@siege_engine.health_points).to eq(350)
+    end
+
+    it 'cannot attack footman' do
+      footman = Footman.new
+      @siege_engine.attack!(footman)
+      expect(footman.health_points).to eq(60)
+    end
+
+    it 'cannot attack peasant' do
+      peasant = Peasant.new
+      @siege_engine.attack!(peasant)
+      expect(peasant.health_points).to eq(35)
+    end
+
+    it 'does double damage on barracks' do
+      barracks = Barracks.new
+      @siege_engine.attack!(barracks)
+      expect(barracks.health_points).to eq(400)
+    end
+    
   end
 end
 

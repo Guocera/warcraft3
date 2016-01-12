@@ -8,6 +8,10 @@ class Barracks
     @lumber = 500
   end
 
+  def damage(dmg)
+    self.health_points -= dmg
+  end
+
   def dead?
     true if health_points <= 0
   end
