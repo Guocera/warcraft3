@@ -7,10 +7,16 @@ class Unit
   end
 
   def attack!(enemy)
-    enemy.damage(attack_power)
+    case enemy
+    when Barracks
+      dmg = attack_power / 2.0
+    when Unit
+      dmg = attack_power
+    end
+    enemy.damage(dmg)
   end
 
-  def damage(attack_power)
-    self.health_points -= attack_power
+  def damage(dmg)
+    self.health_points -= dmg
   end
 end
