@@ -1,13 +1,5 @@
 class Barracks
-  attr_writer :gold, :food 
-
-  def food
-    @food = 1
-  end
-
-  def gold
-    @gold = 134
-  end
+  attr_accessor :gold, :food 
 
   def initialize
     @gold = 1000
@@ -19,9 +11,11 @@ class Barracks
   end
 
   def train_footman
-    self.gold -= 135
-    self.food -= 2
-    Footman.new
+    if can_train_footman?
+      self.gold -= 135
+      self.food -= 2
+      Footman.new
+    end
   end
 
 end
