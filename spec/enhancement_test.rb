@@ -15,8 +15,67 @@ describe Barracks do
     end
   end
 
+  context 'when making siege engine' do
+    it 'return true for sufficient resources' do
+      expect(@barracks.can_train_siege_engine?).to be_truthy
+    end
 
+    it 'returns false if there isnt enough food' do
+      expect(@barracks).to receive(:food).and_return(2)
+      expect(@barracks.can_train_siege_engine?).to be_falsy
+    end
 
+    it 'returns false if there isnt enough gold' do
+      expect(@barracks).to receive(:gold).and_return(199)
+      expect(@barracks.can_train_siege_engine?).to be_falsy
+    end
+
+    it 'returns false if there isnt enough lumber' do
+      expect(@barracks).to receive(:lumber).and_return(59)
+      expect(@barracks.can_train_siege_engine?).to be_falsy
+    end
+
+    it 'it creates a siege engine if sufficient resources' do
+      expect(@barracks).to receive(:can_train_siege_engine?).and_return(true)
+      expect(@barracks.train_siege_engine).to be_a(SiegeEngine)
+    end
+
+    it 'it does not create a siege engine if insufficient resources' do
+      expect(@barracks).to receive(:can_train_siege_engine?).and_return(false)
+      expect(@barracks.train_siege_engine).to be_nil
+    end
+
+    it '200 gold is used' do
+      @barracks.train_siege_engine
+      expect(@barracks.gold).to eq(800)
+    end
+
+    it '60 lumber is used' do
+      @barracks.train_siege_engine
+      expect(@barracks.lumber).to eq(440)
+    end
+
+    it '3 food is used' do
+      @barracks.train_siege_engine
+      expect(@barracks.food).to eq(77)
+    end
+  end
+end
+
+describe SiegeEngine do
+  before do
+    @siege_engine = SiegeEngine.new
+  end
+
+  context 'when created' do
+    it 'should have 50 atk' do
+      expect(@siege_engine.attack_power).to eq(50)
+    end
+
+    it 'should have 400 HP' do
+      expect(@siege_engine.health_points).to eq(400)
+    end
+  end
 end
 
 

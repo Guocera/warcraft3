@@ -8,12 +8,25 @@ class Barracks
     @lumber = 500
   end
 
-  def can_train_footman?
-    gold >= 135 && food >=2
-  end
-
   def dead?
     true if health_points <= 0
+  end
+
+  def can_train_siege_engine?
+    gold >= 200 && lumber >= 60 && food >= 3
+  end
+
+  def train_siege_engine
+    if can_train_siege_engine?
+      self.gold -= 200
+      self.lumber -= 60
+      self.food -= 3
+      SiegeEngine.new
+    end
+  end
+
+  def can_train_footman?
+    gold >= 135 && food >=2
   end
 
   def train_footman
