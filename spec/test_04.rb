@@ -20,7 +20,7 @@ describe Barracks do
     it "returns false if there isn't enough food" do
       # Make the barracks believe it only has 1 food item left, even though it starts with 80
       # This is done by overwriting the `food` getter method
-      expect(@barracks).to receive(:food).and_return(1)
+      expect(@barracks).to receive(:food).and_return(1) # forces return of 1
       expect(@barracks.can_train_footman?).to be_falsey
     end
 

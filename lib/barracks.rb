@@ -1,5 +1,5 @@
 class Barracks
-  attr_accessor :gold, :food 
+  attr_accessor :gold, :food
 
   def initialize
     @gold = 1000
