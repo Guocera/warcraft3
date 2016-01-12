@@ -9,6 +9,10 @@ describe Barracks do
     it 'should have 500 HP' do
       expect(@barracks.health_points).to eq(500)
     end
+
+    it 'should have 500 lumber' do
+      expect(@barracks.lumber).to eq(500)
+    end
   end
 
 
