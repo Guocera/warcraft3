@@ -11,6 +11,10 @@ class Barracks
     gold >= 135 && food >=2
   end
 
+  def dead?
+    true if health_points <= 0
+  end
+
   def train_footman
     if can_train_footman?
       self.gold -= 135

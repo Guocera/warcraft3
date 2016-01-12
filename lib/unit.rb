@@ -7,6 +7,7 @@ class Unit
   end
 
   def attack!(enemy)
+    return if ( dead? || enemy.dead? )
     case enemy
     when Barracks
       dmg = attack_power / 2.0
