@@ -5,9 +5,14 @@ describe Barracks do
     @barracks = Barracks.new
   end
 
-  it 'should have 500 HP' do
-    expect(@barracks.health_points).to eq(500)
+  context 'when created' do
+    it 'should have 500 HP' do
+      expect(@barracks.health_points).to eq(500)
+    end
   end
+
+
+
 end
 
 
